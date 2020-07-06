@@ -23,6 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Article findOneById(Integer id) {
+        System.out.println("*******************");
         return articleMapper.selectByPrimaryKey(id);
     }
 }

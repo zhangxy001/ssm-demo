@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.demo.dao.OaUserMapper">
+  <resultMap id="BaseResultMap" type="com.cn.demo.model.OaUser">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="sex" jdbcType="CHAR" property="sex" />
+    <result column="level" jdbcType="CHAR" property="level" />
+    <result column="is_vaild" jdbcType="CHAR" property="isVaild" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_leave" jdbcType="CHAR" property="isLeave" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_name, sex, level, is_vaild, create_time, update_time, is_leave
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from OA_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from OA_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.demo.model.OaUser">
+    insert into OA_user (user_id, user_name, sex, 
+      level, is_vaild, create_time, 
+      update_time, is_leave)
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, 
+      #{level,jdbcType=CHAR}, #{isVaild,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{isLeave,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.demo.model.OaUser">
+    insert into OA_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="isVaild != null">
+        is_vaild,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isLeave != null">
+        is_leave,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=CHAR},
+      </if>
+      <if test="isVaild != null">
+        #{isVaild,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isLeave != null">
+        #{isLeave,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.demo.model.OaUser">
+    update OA_user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=CHAR},
+      </if>
+      <if test="isVaild != null">
+        is_vaild = #{isVaild,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isLeave != null">
+        is_leave = #{isLeave,jdbcType=CHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.demo.model.OaUser">
+    update OA_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      level = #{level,jdbcType=CHAR},
+      is_vaild = #{isVaild,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_leave = #{isLeave,jdbcType=CHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

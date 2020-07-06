@@ -1,2 +1,2 @@
-# ssm-demo
-ssm学习框架
+# spring-mybatis-demo
+a demo for ssm and with mybatis-generator plugin

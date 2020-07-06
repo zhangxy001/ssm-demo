@@ -11,7 +11,7 @@
     id, content, create_time, title
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from article
     where id = #{id,jdbcType=INTEGER}
@@ -21,9 +21,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cn.demo.model.Article">
-    insert into article (id, content, create_time, 
+    insert into article (id, content, create_time,
       title)
-    values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{title,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.cn.demo.model.Article">
