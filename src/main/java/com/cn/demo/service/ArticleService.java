@@ -1,6 +1,9 @@
 package com.cn.demo.service;
 
 import com.cn.demo.model.Article;
+import com.cn.demo.model.OaUser;
+
+import java.util.List;
 
 /**
  * @Author: ick_xy
@@ -11,4 +14,6 @@ public interface ArticleService {
     public int save(Article article);
 
     public Article findOneById(Integer id);
+
+    List<OaUser> findAll();
 }
