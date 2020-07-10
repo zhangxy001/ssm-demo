@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.demo.dao.RoleMapper">
+
+    <resultMap id="BaseResultMap" type="com.cn.demo.model.Role">
+        <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="sort" jdbcType="VARCHAR" property="sort" />
+        <result column="is_vaild" jdbcType="CHAR" property="isVaild" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+        <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id, user_name, sex, level, is_vaild, create_time, update_time, is_leave
+    </sql>
+
+
+    <select id="seleAll" parameterType="com.cn.demo.model.Role"   resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from role
+        where role_id = #{roleId}
+    </select>
+
+    <insert id="insert" parameterType="com.cn.demo.model.Role" >
+    insert into role (role_id,role_name, sort,
+      is_vaild, create_time, update_time,
+      creator_id, creator_name)
+    values (#{roleId}, #{roleName}, #{sort},
+      #{isVaild}, #{createTime}, #{updateTime},
+      #{creatorId}, #{creatorName})
+  </insert>
+
+
+    <delete id="deleteRole" parameterType="java.lang.String" >
+    delete from role
+    where role_id = #{roleId}
+  </delete>
+
+
+
+    <update id="updateRole" parameterType="com.cn.demo.model.Role" >
+    update role
+    set role_name = #{roleName},
+      sort = #{sort},
+      is_vaild = #{isVaild},
+      create_time = #{createTime},
+      update_time = #{updateTime},
+      creator_id = #{creatorId},
+      creator_name = #{creatorName}
+    where role_id = #{roleId}
+  </update>
+
+
+</mapper>

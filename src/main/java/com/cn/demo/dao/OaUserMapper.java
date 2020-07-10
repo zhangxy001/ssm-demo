@@ -2,16 +2,23 @@ package com.cn.demo.dao;
 
 import com.cn.demo.model.OaUser;
 
-public interface OaUserMapper {
-    int deleteByPrimaryKey(String userId);
+import java.util.List;
 
-    int insert(OaUser record);
+public interface OaUserMapper {
+
+
+    int deleteByUserID(String userId); //根据Id删除
+
+    int insert(OaUser record);  //增加用户
+
+    int updateUser(OaUser oaUser);  //改
+
 
     int insertSelective(OaUser record);
 
-    OaUser selectByPrimaryKey(String userId);
 
-    int updateByPrimaryKeySelective(OaUser record);
+
+
 
     int updateByPrimaryKey(OaUser record);
 }
