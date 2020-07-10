@@ -23,11 +23,18 @@
         <property name="resolveLazily" value="true"/>
     </bean>
 
-    <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
-        <property name="prefix" value="/WEB-INF/static/" />
-        <property name="suffix" value=".jsp" />
-    </bean>
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+<!--    &lt;!&ndash; 定义跳转的文件的前后缀 ，视图模式配置&ndash;&gt;-->
+<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+<!--        &lt;!&ndash; 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 &ndash;&gt;-->
+<!--        <property name="prefix" value="/WEB-INF/static/" />-->
+<!--        <property name="suffix" value=".jsp" />-->
+<!--    </bean>-->
 
 </beans>

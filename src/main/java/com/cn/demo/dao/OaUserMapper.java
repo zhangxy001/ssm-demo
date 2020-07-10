@@ -21,4 +21,6 @@ public interface OaUserMapper {
 
 
     int updateByPrimaryKey(OaUser record);
+
+    List<OaUser> findAll();
 }
