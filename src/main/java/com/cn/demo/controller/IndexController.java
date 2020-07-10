@@ -6,6 +6,7 @@ import com.cn.demo.model.OaUser;
 import com.cn.demo.service.ArticleService;
 import com.cn.demo.service.impl.ArticleServiceImpl;
 import com.cn.demo.util.SaveUtils;
+import com.mysql.cj.util.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,21 @@ public class IndexController{
 
     @RequestMapping(value = "/")
     public String welcome(HttpServletRequest request) {
-        return "成功";
+        return "success";
     }
 
 
     @RequestMapping(value = "/getUserList" ,method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public List getUserList(){
+    public List getUserList(String name,OaUser  oa){
+
+        if(StringUtils.isNullOrEmpty(name)){
+            return null;
+        }
+        //修改的时候
+        if(StringUtils.isNullOrEmpty(oa.getUserName())){
+            oa.setUserName(null);
+        }
         List<OaUser> list = articleService.findAll();
         System.out.println(JSON.toJSONString(list));
         return list;

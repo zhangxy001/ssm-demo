@@ -13,7 +13,7 @@ import javax.transaction.TransactionManager;
 import javax.transaction.Transactional;
 import java.util.TreeSet;
 
-@Service("oaUserServiceImpl")
+@Service("userService")
 @Transactional
 public class OaUserServiceImpl implements OaUserService {
 

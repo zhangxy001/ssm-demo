@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 
-@Service("roleServiceImpl")
+@Service("roleService")
 @Transactional
 public class RoleServiceImpl implements RoleService {
     Logger logger= LoggerFactory.getLogger(OaUserServiceImpl.class);

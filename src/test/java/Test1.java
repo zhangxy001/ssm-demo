@@ -1,5 +1,6 @@
 import com.cn.demo.model.Article;
 import com.cn.demo.service.ArticleService;
+import com.cn.demo.service.RoleService;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,20 +22,21 @@ public class Test1 {
     private static final Logger LOGGER = Logger.getLogger(Test1.class);
 
     @Autowired
-    private ArticleService articleService;
+    private RoleService roleService;
 
-    @Before
-    public void save() {
-        Article article = new Article();
-        article.setTitle("c");
-        article.setContent("ccc");
-        article.setCreateTime(new Date());
-        int i = articleService.save(article);
-        LOGGER.info(i);
-    }
+//    @Before
+//    public void save() {
+//        Article article = new Article();
+//        article.setTitle("c");
+//        article.setContent("ccc");
+//        article.setCreateTime(new Date());
+//        int i = articleService.save(article);
+//        LOGGER.info(i);
+//    }
 
     @Test
     public void findArticle() {
-        LOGGER.info(articleService.findOneById(1).toString());
+        roleService.seleAll();
+//        LOGGER.info(articleService.findOneById(1).toString());
     }
 }

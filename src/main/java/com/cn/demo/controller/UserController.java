@@ -20,7 +20,7 @@ public class UserController {
     Logger logger= LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private OaUserServiceImpl userService;
+    private OaUserService userService;
 
     @RequestMapping(value = "/insert",method = {RequestMethod.GET,RequestMethod.POST})
     public void insert(OaUser oaUser){

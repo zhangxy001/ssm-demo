@@ -1,6 +1,7 @@
 package com.cn.demo.controller;
 
 import com.cn.demo.model.Role;
+import com.cn.demo.service.RoleService;
 import com.cn.demo.service.impl.RoleServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ public class RoleController {
     Logger logger= LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    private RoleServiceImpl roleService;
+    private RoleService roleService;
 
 
     @RequestMapping(value = "/insertRole",method = {RequestMethod.GET,RequestMethod.POST})

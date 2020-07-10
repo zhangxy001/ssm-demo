@@ -20,11 +20,11 @@
     </sql>
 
 
-    <select id="seleAll" parameterType="com.cn.demo.model.Role"   resultMap="BaseResultMap" >
+    <select id="seleAll"   resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
         from role
-        where role_id = #{roleId}
+
     </select>
 
     <insert id="insert" parameterType="com.cn.demo.model.Role" >
