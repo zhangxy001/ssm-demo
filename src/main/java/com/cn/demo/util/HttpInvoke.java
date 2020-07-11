@@ -2,6 +2,7 @@ package com.cn.demo.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cn.demo.model.OaUser;
 import com.cn.demo.model.Role;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -16,6 +17,7 @@ import sun.net.www.http.HttpClient;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -25,13 +27,18 @@ public class HttpInvoke {
 
     public static void main(String[] args){
 
+
         Map map = new HashMap<String,Object>();
-        map.put("name","ick_xy");
+        map.put("userName","ick_xy");
+        map.put("userId",UUID.randomUUID().toString());
         Role role = new Role();
+        OaUser oaUser = new OaUser();
+
+        System.out.println(oaUser.toString());
         String json = "";
-        json = JSON.toJSONString(role);
-        String result = getRep("8080","seleAll",json);
-        logger.info(result);
+        json = JSON.toJSONString(map);
+        Object result = getRep("8080","getUser",json);
+        logger.info(JSON.toJSONString(result));
 
     }
 
@@ -50,7 +57,8 @@ public class HttpInvoke {
             NameValuePair nameValuePair = new BasicNameValuePair(key, (String) jsonObject.get(key));
             list.add(nameValuePair);
         }
-            StringEntity stringEntity = new StringEntity(JSON.toJSONString(list));
+            StringEntity stringEntity = new StringEntity(json);
+            stringEntity.setContentType("application/x-www-form-urlencoded");
             post.setEntity(stringEntity);
             CloseableHttpResponse response = client.execute(post);
             String jsonstr =  EntityUtils.toString(response.getEntity(),"utf-8");

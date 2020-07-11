@@ -1,17 +1,25 @@
 package com.cn.demo.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cn.demo.model.OaUser;
+import com.cn.demo.model.Result;
 import com.cn.demo.service.OaUserService;
 import com.cn.demo.service.impl.OaUserServiceImpl;
+import com.cn.demo.util.SaveUtils;
+import com.mysql.cj.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 @Controller
@@ -63,8 +71,90 @@ public class UserController {
             logger.info("{}:用户删除成功" );
         }
         logger.info("{}:用户删除失败" );
+    }
 
 
+    /**
+     * 修改个人信息
+     * author : ick_xy
+     * data : 2020-07-11
+     */
+    @RequestMapping(value = "updataUser" , method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Result updataUser(OaUser oaUser, HttpServletRequest request){
+        int i = 0;
+        oaUser = getNotStringNullEntity(oaUser,OaUser.class);
+        i = userService.updateUserByUserInfo(oaUser);
+        OaUser user = userService.getUser(oaUser);
+        if( i > 0){
+            setUser(request,user);
+        }
+        return i>0 ? new Result(true,"200","修改成功",new HashMap<>()) : new Result(false,"500","修改失败",new HashMap<>());
+    }
+
+    /**
+     * 根据传入
+     * @param obj
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T>T getNotStringNullEntity(Object obj, Class<?> clazz){
+        Field[] fields = clazz.getDeclaredFields();
+        Object object = null;
+        JSONObject js = new JSONObject();
+        for(Field field : fields){
+            JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(obj));
+             String  value = (String) jsonObject.get(field.getName());
+            if(field.getType().isInstance(String.class)&&value.isEmpty()){
+                js.put(field.getName(),null);
+            }
+            js.put(field.getName(),value);
+        }
+        object = JSON.parseObject(js.toJSONString(),clazz);
+        return (T)object;
+    }
+
+
+
+
+    /**
+     * 注册功能
+     * author : ick_xy
+     * data : 2020-07-11
+     */
+    @RequestMapping(value = "getUser",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Result setUser(OaUser oaUser, HttpServletRequest request){
+        oaUser.setCreateTime(new SimpleDateFormat("yyyy/mm/dd").format(new Date()));
+        oaUser.setUpdateTime(new SimpleDateFormat("yyyy/mm/dd").format(new Date()));
+        oaUser.setUserId(UUID.randomUUID().toString());
+        int i = 0;
+        //首先判断用户是否已存在
+        OaUser oaUser1 = userService.getUser(oaUser);
+        //三目运算符判断是否注册过，并执行注册
+        i = oaUser1 == null? userService.saveUser(oaUser) : 0;
+        if(i>1){
+            setUser(request,oaUser1);
+        }
+        return i>0 ? new Result(true,"200","添加成功",new HashMap<>()) : new Result(false,"500","添加用户出错",new HashMap<>());
+    }
+
+
+    /**
+     * 持久化用户信息
+     * @param request
+     * @param oaUser
+     */
+    public static void setUser(HttpServletRequest request,OaUser oaUser){
+        //放对象
+        Map pr = SaveUtils.getMes(request);
+        Map map = new HashMap<String,Object>();
+        if(pr != null){
+            map = pr;
+        }
+        map.put("user",oaUser);
+        SaveUtils.setMes(request,map);
     }
 
 

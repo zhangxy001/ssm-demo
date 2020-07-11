@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cn.demo.dao.OaUserMapper">
-
-
   <resultMap id="BaseResultMap" type="com.cn.demo.model.OaUser">
     <id column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="sex" jdbcType="CHAR" property="sex" />
     <result column="level" jdbcType="CHAR" property="level" />
     <result column="is_vaild" jdbcType="CHAR" property="isVaild" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
     <result column="is_leave" jdbcType="CHAR" property="isLeave" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
 
 
@@ -139,4 +139,65 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
    -->
+
+
+  <select id="getUser" parameterType="com.cn.demo.model.OaUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from OA_user
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
+
+
+  <insert id="saveUser" flushCache="true"  parameterType="com.cn.demo.model.OaUser"   useGeneratedKeys="false" keyProperty="user_id">
+   insert into  OA_user(user_id, user_name, sex,
+      level, is_vaild, create_time,
+      update_time, is_leave,password,phone) values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR},
+      #{level,jdbcType=CHAR}, #{isVaild,jdbcType=CHAR}, #{createTime,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=VARCHAR}, #{isLeave,jdbcType=CHAR},#{password,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR})
+     </insert>
+
+
+  <update id="updateUserByUserInfo" parameterType="com.cn.demo.model.OaUser">
+    update OA_user
+    <set>
+
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=CHAR},
+      </if>
+      <if test="isVaild != null">
+        is_vaild = #{isVaild,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isLeave != null">
+        is_leave = #{isLeave,jdbcType=CHAR}
+      </if>
+    </set>
+    <where>
+      <if test="userId != null || phone != null ||userName != null ">
+        1 = 1
+      </if>
+      <if test="userId != null">
+       and user_id = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="phone != null">
+       and  user_id = #{phone,jdbcType=VARCHAR}
+      </if>
+      <if test="userName != null">
+       and  user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+    </where>
+
+  </update>
 </mapper>

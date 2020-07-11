@@ -17,10 +17,13 @@ public interface OaUserMapper {
     int insertSelective(OaUser record);
 
 
-
-
-
     int updateByPrimaryKey(OaUser record);
 
     List<OaUser> findAll();
+
+    OaUser getUser(OaUser oaUser);
+
+    int saveUser(OaUser oaUser);
+
+    int updateUserByUserInfo(OaUser oaUser);
 }

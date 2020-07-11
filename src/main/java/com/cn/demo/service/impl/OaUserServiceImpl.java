@@ -26,6 +26,7 @@ public class OaUserServiceImpl implements OaUserService {
     @Override
     public int insert(OaUser oaUser) {
 
+
         try {
             userMapper.insert(oaUser);
         }catch (Exception e){
@@ -48,6 +49,20 @@ public class OaUserServiceImpl implements OaUserService {
         return 0;
     }
 
+    @Override
+    public OaUser getUser(OaUser oaUser) {
+        return  userMapper.getUser(oaUser);
+    }
+
+    @Override
+    public int saveUser(OaUser oaUser) {
+        return userMapper.saveUser(oaUser);
+    }
+
+    @Override
+    public int updateUserByUserInfo(OaUser oaUser) {
+        return userMapper.updateUserByUserInfo(oaUser);
+    }
 
 
     @Override

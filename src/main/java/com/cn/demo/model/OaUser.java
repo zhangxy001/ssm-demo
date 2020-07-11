@@ -3,6 +3,7 @@ package com.cn.demo.model;
 import java.util.Date;
 
 public class OaUser {
+
     private String userId;
 
     private String userName;
@@ -13,18 +14,22 @@ public class OaUser {
 
     private String isVaild;
 
-    private Date createTime;
+    private String createTime;
 
-    private Date updateTime;
+    private String updateTime;
 
     private String isLeave;
+
+    private String password;
+
+    private String phone;
 
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -59,19 +64,19 @@ public class OaUser {
         this.isVaild = isVaild == null ? null : isVaild.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public String getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -81,5 +86,37 @@ public class OaUser {
 
     public void setIsLeave(String isLeave) {
         this.isLeave = isLeave == null ? null : isLeave.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public String toString() {
+        return "OaUser{" +
+                "userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", sex='" + sex + '\'' +
+                ", level='" + level + '\'' +
+                ", isVaild='" + isVaild + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", isLeave='" + isLeave + '\'' +
+                ", password='" + password + '\'' +
+                ", phone=" + phone +
+                '}';
     }
 }
