@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cn.demo.model.OaUser;
 import com.cn.demo.model.Result;
+import com.cn.demo.model.UserLock;
 import com.cn.demo.service.OaUserService;
 import com.cn.demo.service.impl.OaUserServiceImpl;
 import com.cn.demo.util.SaveUtils;
@@ -91,6 +92,44 @@ public class UserController {
         }
         return i>0 ? new Result(true,"200","修改成功",new HashMap<>()) : new Result(false,"500","修改失败",new HashMap<>());
     }
+
+
+    @RequestMapping(value = "login" , method = {RequestMethod.GET , RequestMethod.POST})
+    @ResponseBody
+    public Result login(String userName,String password){
+        Result result = null;
+        //登陆前查询 -- 登录账号 userName
+        OaUser oaUser = userService.selByuserName(userName);
+        if(oaUser!=null){
+            UserLock userLock = userService.selIfLock(oaUser.getUserId());
+            //锁定次数+1
+            if(userLock.getErrorCount()<3){
+                int count = userLock.getErrorCount();
+                //登录失败次数+1
+                if(!oaUser.getPassword().equals(password)){
+                    count ++;
+                    //登录成功，错误次数归 0
+                }else{
+                    count = 0;
+                }
+                userLock.setLockTime(new SimpleDateFormat("yyyy/mm/dd HH:MM:ss").format(new Date(System.currentTimeMillis())));
+                userLock.setErrorCount(userLock.getErrorCount()+1);
+                userService.updateLock(userLock);
+            }
+
+           return userLock.getErrorCount()>3 ?new Result(false,"400","用户已锁定",new HashMap<>()) : !oaUser.getPassword().equals(password) ? new Result(false,"400","用户名或密码不正确",new HashMap<>()) : new Result(true,"200","登录成功",new HashMap<>()) ;
+        }
+        else{
+            result = new Result(false,"400","无此用户",new HashMap<>());
+        }
+        return result;
+    }
+
+
+
+
+
+
 
     /**
      * 根据传入

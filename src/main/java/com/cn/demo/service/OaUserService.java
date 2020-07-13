@@ -1,6 +1,7 @@
 package com.cn.demo.service;
 
 import com.cn.demo.model.OaUser;
+import com.cn.demo.model.UserLock;
 
 public interface OaUserService {
 
@@ -15,6 +16,12 @@ public interface OaUserService {
     int saveUser(OaUser oaUser);
 
     int updateUserByUserInfo(OaUser oaUser);
+
+    OaUser selByuserName(String userName);
+
+    UserLock selIfLock(String userId);
+
+    void updateLock(UserLock userLock);
 
     // int updateByPrimaryKeySelective(OaUser record);
 

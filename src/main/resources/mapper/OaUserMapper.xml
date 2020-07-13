@@ -148,6 +148,14 @@
     where phone = #{phone,jdbcType=VARCHAR}
   </select>
 
+  <select id="selByuserName" parameterType="String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from OA_user
+    where user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+
+
 
   <insert id="saveUser" flushCache="true"  parameterType="com.cn.demo.model.OaUser"   useGeneratedKeys="false" keyProperty="user_id">
    insert into  OA_user(user_id, user_name, sex,

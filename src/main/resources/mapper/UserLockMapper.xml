@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.demo.dao.UserLockMapper">
+  <resultMap id="BaseResultMap" type="com.cn.demo.model.UserLock">
+    <id column="lock_id" jdbcType="VARCHAR" property="lockId" />
+    <result column="error_count" jdbcType="INTEGER" property="errorCount" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="last_login_time" jdbcType="VARCHAR" property="lastLoginTime" />
+    <result column="lock_time" jdbcType="VARCHAR" property="lockTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    lock_id, error_count, user_id, last_login_time, lock_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_lock
+    where lock_id = #{lockId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user_lock
+    where lock_id = #{lockId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.demo.model.UserLock">
+    insert into user_lock (lock_id, error_count, user_id, 
+      last_login_time, lock_time)
+    values (#{lockId,jdbcType=VARCHAR}, #{errorCount,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
+      #{lastLoginTime,jdbcType=VARCHAR}, #{lockTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.demo.model.UserLock">
+    insert into user_lock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lockId != null">
+        lock_id,
+      </if>
+      <if test="errorCount != null">
+        error_count,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="lockTime != null">
+        lock_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lockId != null">
+        #{lockId,jdbcType=VARCHAR},
+      </if>
+      <if test="errorCount != null">
+        #{errorCount,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lockTime != null">
+        #{lockTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.demo.model.UserLock">
+    update user_lock
+    <set>
+      <if test="errorCount != null">
+        error_count = #{errorCount,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=VARCHAR},
+      </if>
+      <if test="lockTime != null">
+        lock_time = #{lockTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lock_id = #{lockId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.demo.model.UserLock">
+    update user_lock
+    set error_count = #{errorCount,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=VARCHAR},
+      lock_time = #{lockTime,jdbcType=VARCHAR}
+    where lock_id = #{lockId,jdbcType=VARCHAR}
+  </update>
+</mapper>

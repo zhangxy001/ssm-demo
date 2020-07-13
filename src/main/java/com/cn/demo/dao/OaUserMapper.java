@@ -26,4 +26,6 @@ public interface OaUserMapper {
     int saveUser(OaUser oaUser);
 
     int updateUserByUserInfo(OaUser oaUser);
+
+    OaUser selByuserName(String userName);
 }

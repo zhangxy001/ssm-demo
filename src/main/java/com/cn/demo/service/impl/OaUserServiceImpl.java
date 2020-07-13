@@ -1,8 +1,10 @@
 package com.cn.demo.service.impl;
 
 
+import com.cn.demo.dao.LockMapper;
 import com.cn.demo.dao.OaUserMapper;
 import com.cn.demo.model.OaUser;
+import com.cn.demo.model.UserLock;
 import com.cn.demo.service.OaUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,9 @@ public class OaUserServiceImpl implements OaUserService {
 
     @Autowired
     private OaUserMapper userMapper;
+
+    @Autowired
+    private LockMapper lockMapper;
 
 
     @Override
@@ -64,6 +69,20 @@ public class OaUserServiceImpl implements OaUserService {
         return userMapper.updateUserByUserInfo(oaUser);
     }
 
+    @Override
+    public OaUser selByuserName(String userName) {
+        return userMapper.selByuserName(userName);
+    }
+
+    @Override
+    public UserLock selIfLock(String userId) {
+        return lockMapper.selIfLock(userId);
+    }
+
+    @Override
+    public void updateLock(UserLock userLock) {
+         lockMapper.updateLock(userLock);
+    }
 
     @Override
     public int deleteByUserID(String userId) {
