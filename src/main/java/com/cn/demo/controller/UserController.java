@@ -64,8 +64,6 @@ public class UserController {
 
     @RequestMapping(value = "/deleteByUserID",method = {RequestMethod.GET,RequestMethod.POST})
     public void deleteByUserID(String   userId){
-
-
         Integer count=  userService.deleteByUserID(userId);
 
         if(count>0){
@@ -178,6 +176,61 @@ public class UserController {
         }
         return i>0 ? new Result(true,"200","添加成功",new HashMap<>()) : new Result(false,"500","添加用户出错",new HashMap<>());
     }
+
+
+
+    /**
+     * 登出功能
+     * author : ick_xy
+     * data : 2020-07-11
+     */
+    @RequestMapping(value = "loginOut",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Result loginOut(OaUser oaUser, HttpServletRequest request){
+        boolean flag = false;
+        try {
+            setUser(request, null);
+            flag = true;
+        }catch (Exception e){
+
+        }
+        return flag ? new Result(true,"200","登出成功",new HashMap<>()) : new Result(false,"500","登出失败",new HashMap<>());
+    }
+
+
+
+
+
+
+    /**
+     * 注销
+     * author : ick_xy
+     * data : 2020-07-11
+     */
+    @RequestMapping(value = "deleteUser",method = {RequestMethod.GET,RequestMethod.POST})
+    @ResponseBody
+    public Result deleteUser(OaUser oaUser, HttpServletRequest request){
+        boolean flag = false;
+        try {
+            userService.selByuserName(oaUser.getUserName());
+            deleteByUserID(oaUser.getUserId());
+            flag = true;
+        }catch (Exception e){
+
+        }
+        return flag ? new Result(true,"200","注销成功",new HashMap<>()) : new Result(false,"500","注销失败",new HashMap<>());
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
